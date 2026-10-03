@@ -120,6 +120,15 @@
   margin-bottom: 20px;
 }
 
+/* replaces the old inline style={{ maxWidth: 420 }} */
+.panel-narrow {
+  max-width: 420px;
+}
+
+.panel-narrow .field {
+  margin-bottom: 14px;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));

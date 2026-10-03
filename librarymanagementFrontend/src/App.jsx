@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import "./App.css";
-import Toast from "./components/Toast";
-import BooksTab from "./components/BooksTab";
-import MembersTab from "./components/MembersTab";
-import CirculationTab from "./components/CirculationTab";
-import ReportsTab from "./components/ReportsTab";
+import useNotification from "./hooks/useNotification";
+import Toast from "./components/common/Toast";
+import TopBar from "./components/layout/TopBar";
+import BooksTab from "./components/books/BooksTab";
+import MembersTab from "./components/members/MembersTab";
+import CirculationTab from "./components/circulation/CirculationTab";
+import ReportsTab from "./components/reports/ReportsTab";
 
 const TABS = [
   { id: "books", label: "Books" },
@@ -15,28 +17,12 @@ const TABS = [
 
 export default function App() {
   const [tab, setTab] = useState("books");
-  const [note, setNote] = useState(null);
-
-  const notify = (kind, text) => {
-    setNote({ kind, text });
-    window.clearTimeout(notify._t);
-    notify._t = window.setTimeout(() => setNote(null), 3500);
-  };
+  const { note, notify, dismiss } = useNotification();
 
   return (
     <div className="app">
-      <Toast note={note} onClose={() => setNote(null)} />
-
-      <div className="topbar">
-        <span className="brand">Library Management</span>
-        <div className="tabs">
-          {TABS.map((t) => (
-            <button key={t.id} className={tab === t.id ? "active" : ""} onClick={() => setTab(t.id)}>
-              {t.label}
-            </button>
-          ))}
-        </div>
-      </div>
+      <Toast note={note} onClose={dismiss} />
+      <TopBar tabs={TABS} activeTab={tab} onTabChange={setTab} />
 
       <main className="main">
         {tab === "books" && <BooksTab notify={notify} />}

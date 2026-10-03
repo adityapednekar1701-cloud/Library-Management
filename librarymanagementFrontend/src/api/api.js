@@ -1,4 +1,3 @@
-// Point this at your running Tomcat instance / context path.
 export const BASE_URL = "http://localhost:8080/LibraryManagement";
 
 export async function apiRequest(path, options = {}) {
